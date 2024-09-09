@@ -15,7 +15,7 @@
         </marker>
       </defs>
     </svg>
-    <RecycleScroller page-mode class="scroller" :items="items">
+    <RecycleScroller page-mode class="scroller" :item-size="512" :items="items">
       <template v-slot="{ item, index }">
         <v-line
           :annotator-uuid="uuid"
@@ -62,27 +62,27 @@
 </template>
 
 <script lang="ts">
-import { debounce } from "lodash-es";
-import { v4 as uuidv4 } from "uuid";
-import Vue, { PropType } from "vue";
-import VLine from "./VLine.vue";
-import "vue-virtual-scroller/dist/vue-virtual-scroller.css";
-import { RecycleScroller } from "vue-virtual-scroller";
-import { Text } from "@/domain/models/Label/Text";
+import { debounce } from 'lodash-es';
+import { v4 as uuidv4 } from 'uuid';
+import Vue, { PropType } from 'vue';
+import VLine from './VLine.vue';
+import 'vue-virtual-scroller/dist/vue-virtual-scroller.css';
+import { RecycleScroller } from 'vue-virtual-scroller';
+import { Text } from '@/domain/models/Label/Text';
 import {
   Label,
   LabelList,
   EntityLabelListItem,
   RelationLabelListItem,
-} from "@/domain/models/Label/Label";
-import { Entities, Entity } from "@/domain/models/Label/Entity";
-import { Font } from "@/domain/models/Line/Font";
-import { widthOf } from "@/domain/models/Line/Utils";
-import { LineWidthManager } from "../domain/models/Line/WidthManager";
-import { TextLine } from "@/domain/models/Line/LineText";
-import { TextLineSplitter } from "@/domain/models/Line/LineSplitter";
-import { TextSelector } from "@/domain/models/EventHandler/TextSelectionHandler";
-import { Relation, RelationList } from "@/domain/models/Label/Relation";
+} from '@/domain/models/Label/Label';
+import { Entities, Entity } from '@/domain/models/Label/Entity';
+import { Font } from '@/domain/models/Line/Font';
+import { widthOf } from '@/domain/models/Line/Utils';
+import { LineWidthManager } from '../domain/models/Line/WidthManager';
+import { TextLine } from '@/domain/models/Line/LineText';
+import { TextLineSplitter } from '@/domain/models/Line/LineSplitter';
+import { TextSelector } from '@/domain/models/EventHandler/TextSelectionHandler';
+import { Relation, RelationList } from '@/domain/models/Label/Relation';
 
 interface ViewLine {
   id: string;
@@ -104,7 +104,7 @@ export default Vue.extend({
     },
     text: {
       type: String,
-      default: "",
+      default: '',
       required: true,
     },
     entities: {
@@ -168,7 +168,7 @@ export default Vue.extend({
     this.textElement = document.getElementById(
       `text-${this.uuid}`
     ) as unknown as SVGTextElement;
-    window.addEventListener("resize", this.setMaxWidth);
+    window.addEventListener('resize', this.setMaxWidth);
     this.setMaxWidth();
   },
 
@@ -268,16 +268,16 @@ export default Vue.extend({
   },
 
   beforeDestroy() {
-    window.removeEventListener("resize", this.setMaxWidth);
+    window.removeEventListener('resize', this.setMaxWidth);
   },
 
   methods: {
     clicked(event: Event, entity: Entity) {
-      this.$emit("click:entity", event, entity.id);
+      this.$emit('click:entity', event, entity.id);
     },
 
     onRelationClicked(event: Event, relation: Relation) {
-      this.$emit("click:relation", event, relation);
+      this.$emit('click:relation', event, relation);
     },
 
     setMaxWidth() {
@@ -311,7 +311,7 @@ export default Vue.extend({
           this.entityList,
           this._text
         );
-        this.$emit("add:entity", event, startOffset, endOffset);
+        this.$emit('add:entity', event, startOffset, endOffset);
       } catch (e) {
         return;
       }
